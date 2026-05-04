@@ -154,3 +154,47 @@ def test_create_event_rejects_participant_conflict():
 
     assert payload["ok"] is False
     assert payload["error"]["code"] == "participant_conflict"
+
+
+def test_update_event_changes_title_and_room_after_conflict_check():
+    update_event = importlib.import_module("update_event")
+    conn = load_demo_db()
+
+    payload = update_event.update_event(
+        conn,
+        event_id="evt_20260515_market",
+        actor_user_id="user_001",
+        title="市場需求對齊更新版",
+        room_id="room_B",
+        starts_at="2026-05-15T10:00:00+08:00",
+        ends_at="2026-05-15T10:30:00+08:00",
+    )
+
+    row = conn.execute(
+        "SELECT title, room_id FROM events WHERE event_id = 'evt_20260515_market'"
+    ).fetchone()
+    assert payload["ok"] is True
+    assert row["title"] == "市場需求對齊更新版"
+    assert row["room_id"] == "room_B"
+
+
+def test_cancel_event_marks_cancelled_and_logs_notifications():
+    cancel_event = importlib.import_module("cancel_event")
+    conn = load_demo_db()
+
+    payload = cancel_event.cancel_event(
+        conn,
+        event_id="evt_20260515_market",
+        actor_user_id="user_001",
+        dry_run_line=True,
+    )
+
+    status = conn.execute(
+        "SELECT status FROM events WHERE event_id = 'evt_20260515_market'"
+    ).fetchone()["status"]
+    notification_count = conn.execute(
+        "SELECT COUNT(*) FROM notification_logs WHERE event_id = 'evt_20260515_market'"
+    ).fetchone()[0]
+    assert payload["ok"] is True
+    assert status == "cancelled"
+    assert notification_count == 1
