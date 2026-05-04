@@ -1,0 +1,39 @@
+{
+  "name": "calendar-management",
+  "displayName": "Calendar Management Demo",
+  "description": "Demo-only calendar management skill backed by SQLite for OpenClaw Line conversations.",
+  "version": "0.1.0",
+  "runtime": "python",
+  "tools": [
+    {
+      "name": "query_events",
+      "description": "Query a demo user's owned and invited events in a time range.",
+      "command": "python tools/query_events.py"
+    },
+    {
+      "name": "create_event",
+      "description": "Create a demo meeting after participant and room conflict checks, then push Line invitations.",
+      "command": "python tools/create_event.py"
+    },
+    {
+      "name": "update_event",
+      "description": "Update a demo meeting after conflict checks.",
+      "command": "python tools/update_event.py"
+    },
+    {
+      "name": "cancel_event",
+      "description": "Cancel a demo meeting and push Line cancellation notices.",
+      "command": "python tools/cancel_event.py"
+    },
+    {
+      "name": "find_free_slots",
+      "description": "Find common free time slots for demo users.",
+      "command": "python tools/find_free_slots.py"
+    },
+    {
+      "name": "find_available_rooms",
+      "description": "Find demo rooms available in a time range.",
+      "command": "python tools/find_available_rooms.py"
+    }
+  ]
+}
