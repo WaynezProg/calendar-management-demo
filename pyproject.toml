@@ -1,0 +1,14 @@
+[project]
+name = "calendar-management-demo"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["skills/calendar-management/tools"]
