@@ -104,3 +104,53 @@ def test_find_free_slots_returns_open_slot_for_participants():
     slots = [(slot["starts_at"], slot["ends_at"]) for slot in payload["slots"]]
     assert payload["ok"] is True
     assert ("2026-05-26T14:00:00+08:00", "2026-05-26T15:00:00+08:00") in slots
+
+
+def test_create_event_writes_event_participants_and_notifications():
+    create_event = importlib.import_module("create_event")
+    conn = load_demo_db()
+
+    payload = create_event.create_event(
+        conn,
+        creator_user_id="user_002",
+        participant_user_ids=["user_003", "user_004"],
+        room_id="room_B",
+        title="使用者需求討論",
+        description="Demo 建立會議",
+        starts_at="2026-05-26T14:00:00+08:00",
+        ends_at="2026-05-26T15:00:00+08:00",
+        dry_run_line=True,
+    )
+
+    assert payload["ok"] is True
+    event_id = payload["event"]["event_id"]
+    participant_count = conn.execute(
+        "SELECT COUNT(*) FROM event_participants WHERE event_id = ?",
+        (event_id,),
+    ).fetchone()[0]
+    notification_count = conn.execute(
+        "SELECT COUNT(*) FROM notification_logs WHERE event_id = ?",
+        (event_id,),
+    ).fetchone()[0]
+    assert participant_count == 3
+    assert notification_count == 2
+
+
+def test_create_event_rejects_participant_conflict():
+    create_event = importlib.import_module("create_event")
+    conn = load_demo_db()
+
+    payload = create_event.create_event(
+        conn,
+        creator_user_id="user_002",
+        participant_user_ids=["user_001"],
+        room_id="room_A",
+        title="衝突會議",
+        description="Demo 衝突",
+        starts_at="2026-05-11T10:30:00+08:00",
+        ends_at="2026-05-11T11:00:00+08:00",
+        dry_run_line=True,
+    )
+
+    assert payload["ok"] is False
+    assert payload["error"]["code"] == "participant_conflict"
