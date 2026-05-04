@@ -78,3 +78,15 @@ python skills/calendar-management/tools/create_event.py \
 ## Scope Guard
 
 This demo does not support enterprise calendar sync, invite reply handling, cron reminders, recurring event management, or automatic user creation.
+
+## Verification Evidence
+
+- SQLite schema and seed tests: passed.
+- Calendar tool tests: passed.
+- Demo scenario tests: passed.
+- OpenClaw skill visibility: passed with `calendar-management ✓ Ready`.
+- OpenClaw gateway config/health: passed after restart.
+- OpenClaw query prompt: passed for 王大明 2026/5/11-2026/5/15 schedule.
+- OpenClaw create prompt: duplicate-safe behavior passed because the dry-run CLI smoke had already created the same event.
+- OpenClaw cancel prompt: passed with dry-run Line notification.
+- Real Line push: not executed in this shell because `LINE_CHANNEL_ACCESS_TOKEN` was missing and seed `Udemo*` values are placeholders.
