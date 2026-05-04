@@ -1,0 +1,76 @@
+INSERT INTO users (user_id, display_name, department, line_user_id) VALUES
+('user_001', '王大明', '產品', 'Udemo001'),
+('user_002', '李小美', '工程', 'Udemo002'),
+('user_003', '張小志', '設計', 'Udemo003'),
+('user_004', '陳小鳳', '市場', 'Udemo004'),
+('user_005', '林志強', '業務', 'Udemo005'),
+('user_006', '黃雅婷', '法遵', 'Udemo006'),
+('user_007', '趙建宏', '營運', 'Udemo007');
+
+INSERT INTO rooms (room_id, name, capacity, equipment) VALUES
+('room_A', '會議室 A', 4, 'projector,video'),
+('room_B', '會議室 B', 8, 'whiteboard,tv');
+
+INSERT INTO calendars (calendar_id, owner_type, owner_id, name) VALUES
+('cal_user_001', 'user', 'user_001', '王大明行事曆'),
+('cal_user_002', 'user', 'user_002', '李小美行事曆'),
+('cal_user_003', 'user', 'user_003', '張小志行事曆'),
+('cal_user_004', 'user', 'user_004', '陳小鳳行事曆'),
+('cal_user_005', 'user', 'user_005', '林志強行事曆'),
+('cal_user_006', 'user', 'user_006', '黃雅婷行事曆'),
+('cal_user_007', 'user', 'user_007', '趙建宏行事曆'),
+('cal_room_A', 'room', 'room_A', '會議室 A 行事曆'),
+('cal_room_B', 'room', 'room_B', '會議室 B 行事曆');
+
+INSERT INTO events (event_id, calendar_id, creator_user_id, room_id, title, description, starts_at, ends_at) VALUES
+('evt_20260511_standup', 'cal_user_001', 'user_001', 'room_A', 'Daily Standup', '每日同步', '2026-05-11T09:30:00+08:00', '2026-05-11T09:45:00+08:00'),
+('evt_20260512_standup', 'cal_user_001', 'user_001', 'room_A', 'Daily Standup', '每日同步', '2026-05-12T09:30:00+08:00', '2026-05-12T09:45:00+08:00'),
+('evt_20260513_standup', 'cal_user_001', 'user_001', 'room_A', 'Daily Standup', '每日同步', '2026-05-13T09:30:00+08:00', '2026-05-13T09:45:00+08:00'),
+('evt_20260514_standup', 'cal_user_001', 'user_001', 'room_A', 'Daily Standup', '每日同步', '2026-05-14T09:30:00+08:00', '2026-05-14T09:45:00+08:00'),
+('evt_20260515_standup', 'cal_user_001', 'user_001', 'room_A', 'Daily Standup', '每日同步', '2026-05-15T09:30:00+08:00', '2026-05-15T09:45:00+08:00'),
+('evt_20260511_team_sync', 'cal_user_001', 'user_001', 'room_B', '週一團隊同步', '固定同步', '2026-05-11T14:00:00+08:00', '2026-05-11T15:00:00+08:00'),
+('evt_20260511_arch', 'cal_user_002', 'user_002', 'room_B', '技術架構審查', '架構審查', '2026-05-11T10:00:00+08:00', '2026-05-11T12:00:00+08:00'),
+('evt_20260512_design', 'cal_user_003', 'user_003', NULL, '設計系統整理', '個人工作時間', '2026-05-12T09:00:00+08:00', '2026-05-12T10:00:00+08:00'),
+('evt_20260513_impl', 'cal_user_002', 'user_002', 'room_A', '技術實現討論', '技術討論', '2026-05-13T14:00:00+08:00', '2026-05-13T14:30:00+08:00'),
+('evt_20260514_customer', 'cal_user_001', 'user_001', NULL, '出差拜訪客戶', '外出', '2026-05-14T15:00:00+08:00', '2026-05-14T17:00:00+08:00'),
+('evt_20260515_market', 'cal_user_001', 'user_001', 'room_A', '市場需求對齊', '需求對齊', '2026-05-15T10:00:00+08:00', '2026-05-15T10:30:00+08:00'),
+('evt_20260515_demo', 'cal_user_001', 'user_001', 'room_A', 'Demo Review', '週五展示', '2026-05-15T16:00:00+08:00', '2026-05-15T17:00:00+08:00'),
+('evt_20260525_team_sync', 'cal_user_001', 'user_001', 'room_B', '週一團隊同步', '固定同步', '2026-05-25T14:00:00+08:00', '2026-05-25T15:00:00+08:00');
+
+INSERT INTO event_participants (event_id, user_id, role, response_status) VALUES
+('evt_20260511_standup', 'user_001', 'organizer', 'accepted'),
+('evt_20260511_standup', 'user_002', 'attendee', 'accepted'),
+('evt_20260511_standup', 'user_003', 'attendee', 'accepted'),
+('evt_20260512_standup', 'user_001', 'organizer', 'accepted'),
+('evt_20260512_standup', 'user_002', 'attendee', 'accepted'),
+('evt_20260512_standup', 'user_003', 'attendee', 'accepted'),
+('evt_20260513_standup', 'user_001', 'organizer', 'accepted'),
+('evt_20260513_standup', 'user_002', 'attendee', 'accepted'),
+('evt_20260513_standup', 'user_003', 'attendee', 'accepted'),
+('evt_20260514_standup', 'user_001', 'organizer', 'accepted'),
+('evt_20260514_standup', 'user_002', 'attendee', 'accepted'),
+('evt_20260514_standup', 'user_003', 'attendee', 'accepted'),
+('evt_20260515_standup', 'user_001', 'organizer', 'accepted'),
+('evt_20260515_standup', 'user_002', 'attendee', 'accepted'),
+('evt_20260515_standup', 'user_003', 'attendee', 'accepted'),
+('evt_20260511_team_sync', 'user_001', 'organizer', 'accepted'),
+('evt_20260511_team_sync', 'user_002', 'attendee', 'accepted'),
+('evt_20260511_team_sync', 'user_003', 'attendee', 'accepted'),
+('evt_20260511_team_sync', 'user_004', 'attendee', 'accepted'),
+('evt_20260511_arch', 'user_002', 'organizer', 'accepted'),
+('evt_20260511_arch', 'user_001', 'attendee', 'accepted'),
+('evt_20260511_arch', 'user_003', 'attendee', 'accepted'),
+('evt_20260511_arch', 'user_004', 'attendee', 'accepted'),
+('evt_20260512_design', 'user_003', 'organizer', 'accepted'),
+('evt_20260513_impl', 'user_002', 'organizer', 'accepted'),
+('evt_20260513_impl', 'user_003', 'attendee', 'accepted'),
+('evt_20260514_customer', 'user_001', 'organizer', 'accepted'),
+('evt_20260515_market', 'user_001', 'organizer', 'accepted'),
+('evt_20260515_market', 'user_004', 'attendee', 'accepted'),
+('evt_20260515_demo', 'user_001', 'organizer', 'accepted'),
+('evt_20260515_demo', 'user_002', 'attendee', 'accepted'),
+('evt_20260515_demo', 'user_003', 'attendee', 'accepted'),
+('evt_20260525_team_sync', 'user_001', 'organizer', 'accepted'),
+('evt_20260525_team_sync', 'user_002', 'attendee', 'accepted'),
+('evt_20260525_team_sync', 'user_003', 'attendee', 'accepted'),
+('evt_20260525_team_sync', 'user_004', 'attendee', 'accepted');
