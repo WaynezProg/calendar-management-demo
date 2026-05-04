@@ -53,3 +53,21 @@ def test_core_detects_room_conflict():
     )
 
     assert conflicts[0]["event_id"] == "evt_20260525_team_sync"
+
+
+def test_query_events_returns_owned_and_invited_events():
+    query_events = importlib.import_module("query_events")
+    conn = load_demo_db()
+
+    payload = query_events.query_events(
+        conn,
+        user_id="user_001",
+        starts_at="2026-05-11T00:00:00+08:00",
+        ends_at="2026-05-16T00:00:00+08:00",
+    )
+
+    titles = [event["title"] for event in payload["events"]]
+    assert payload["ok"] is True
+    assert "Daily Standup" in titles
+    assert "技術架構審查" in titles
+    assert "市場需求對齊" in titles
