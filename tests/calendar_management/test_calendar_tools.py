@@ -71,3 +71,36 @@ def test_query_events_returns_owned_and_invited_events():
     assert "Daily Standup" in titles
     assert "技術架構審查" in titles
     assert "市場需求對齊" in titles
+
+
+def test_find_available_rooms_excludes_conflicting_room():
+    find_available_rooms = importlib.import_module("find_available_rooms")
+    conn = load_demo_db()
+
+    payload = find_available_rooms.find_available_rooms(
+        conn,
+        starts_at="2026-05-25T14:00:00+08:00",
+        ends_at="2026-05-25T15:00:00+08:00",
+        min_capacity=4,
+    )
+
+    room_ids = [room["room_id"] for room in payload["rooms"]]
+    assert payload["ok"] is True
+    assert "room_A" in room_ids
+    assert "room_B" not in room_ids
+
+
+def test_find_free_slots_returns_open_slot_for_participants():
+    find_free_slots = importlib.import_module("find_free_slots")
+    conn = load_demo_db()
+
+    payload = find_free_slots.find_free_slots(
+        conn,
+        user_ids=["user_002", "user_003", "user_004"],
+        day="2026-05-26",
+        duration_minutes=60,
+    )
+
+    slots = [(slot["starts_at"], slot["ends_at"]) for slot in payload["slots"]]
+    assert payload["ok"] is True
+    assert ("2026-05-26T14:00:00+08:00", "2026-05-26T15:00:00+08:00") in slots
