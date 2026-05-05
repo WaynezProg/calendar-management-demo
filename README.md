@@ -166,7 +166,7 @@ Seed data 內建：
 - 7 位 demo 使用者。
 - 2 間 demo 會議室。
 - 2026 年 5 月 demo 行程。
-- `Udemo*` placeholder Line user ids。
+- 中文姓名、英文姓名與 `Udemo*` placeholder Line user ids。
 
 ## CLI Demo
 
@@ -259,6 +259,18 @@ export LINE_CHANNEL_ACCESS_TOKEN="<channel-access-token>"
 1. 查詢個人行程：王大明 2026/5/11 到 2026/5/15。
 2. 建立會議：李小美邀請張小志、陳小鳳，2026/5/26 14:00-15:00，會議室 B。
 3. 取消會議：取消剛建立的會議，並送出 dry-run Line notification。
+
+## Demo Users
+
+| User ID | 中文姓名 | English Name | Department |
+| --- | --- | --- | --- |
+| `user_001` | 王大明 | David Wang | 產品 |
+| `user_002` | 李小美 | May Lee | 工程 |
+| `user_003` | 張小志 | Jason Chang | 設計 |
+| `user_004` | 陳小鳳 | Fiona Chen | 市場 |
+| `user_005` | 林志強 | Kevin Lin | 業務 |
+| `user_006` | 黃雅婷 | Tina Huang | 法遵 |
+| `user_007` | 趙建宏 | Henry Chao | 營運 |
 
 ## 已驗證狀態
 

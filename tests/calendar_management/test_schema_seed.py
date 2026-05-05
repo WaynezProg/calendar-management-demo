@@ -49,6 +49,19 @@ def test_seed_has_demo_users_rooms_and_may_events():
     ).fetchone()[0] >= 12
 
 
+def test_seed_users_have_english_names():
+    conn = load_demo_db()
+
+    rows = conn.execute(
+        "SELECT user_id, display_name, english_name FROM users ORDER BY user_id"
+    ).fetchall()
+
+    assert len(rows) == 7
+    assert rows[0]["display_name"] == "王大明"
+    assert rows[0]["english_name"] == "David Wang"
+    assert all(row["english_name"] for row in rows)
+
+
 def test_seed_can_query_user_owned_and_invited_events():
     conn = load_demo_db()
 

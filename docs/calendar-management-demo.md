@@ -20,13 +20,15 @@ export LINE_CHANNEL_ACCESS_TOKEN="<channel-access-token>"
 
 ## Demo Users
 
-- `user_001`: 王大明
-- `user_002`: 李小美
-- `user_003`: 張小志
-- `user_004`: 陳小鳳
-- `user_005`: 林志強
-- `user_006`: 黃雅婷
-- `user_007`: 趙建宏
+| User ID | 中文姓名 | English Name | Department |
+| --- | --- | --- | --- |
+| `user_001` | 王大明 | David Wang | 產品 |
+| `user_002` | 李小美 | May Lee | 工程 |
+| `user_003` | 張小志 | Jason Chang | 設計 |
+| `user_004` | 陳小鳳 | Fiona Chen | 市場 |
+| `user_005` | 林志強 | Kevin Lin | 業務 |
+| `user_006` | 黃雅婷 | Tina Huang | 法遵 |
+| `user_007` | 趙建宏 | Henry Chao | 營運 |
 
 ## Demo Scenarios
 

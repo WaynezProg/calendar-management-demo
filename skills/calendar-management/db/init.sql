@@ -3,6 +3,7 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE users (
     user_id TEXT PRIMARY KEY,
     display_name TEXT NOT NULL,
+    english_name TEXT NOT NULL,
     department TEXT NOT NULL,
     line_user_id TEXT UNIQUE NOT NULL,
     timezone TEXT NOT NULL DEFAULT 'Asia/Taipei',

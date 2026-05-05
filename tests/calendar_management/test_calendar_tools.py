@@ -38,6 +38,7 @@ def test_core_detects_user_conflict():
     )
 
     assert conflicts[0]["user_id"] == "user_001"
+    assert conflicts[0]["english_name"] == "David Wang"
     assert conflicts[0]["title"] == "技術架構審查"
 
 

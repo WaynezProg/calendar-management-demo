@@ -1,11 +1,11 @@
-INSERT INTO users (user_id, display_name, department, line_user_id) VALUES
-('user_001', '王大明', '產品', 'Udemo001'),
-('user_002', '李小美', '工程', 'Udemo002'),
-('user_003', '張小志', '設計', 'Udemo003'),
-('user_004', '陳小鳳', '市場', 'Udemo004'),
-('user_005', '林志強', '業務', 'Udemo005'),
-('user_006', '黃雅婷', '法遵', 'Udemo006'),
-('user_007', '趙建宏', '營運', 'Udemo007');
+INSERT INTO users (user_id, display_name, english_name, department, line_user_id) VALUES
+('user_001', '王大明', 'David Wang', '產品', 'Udemo001'),
+('user_002', '李小美', 'May Lee', '工程', 'Udemo002'),
+('user_003', '張小志', 'Jason Chang', '設計', 'Udemo003'),
+('user_004', '陳小鳳', 'Fiona Chen', '市場', 'Udemo004'),
+('user_005', '林志強', 'Kevin Lin', '業務', 'Udemo005'),
+('user_006', '黃雅婷', 'Tina Huang', '法遵', 'Udemo006'),
+('user_007', '趙建宏', 'Henry Chao', '營運', 'Udemo007');
 
 INSERT INTO rooms (room_id, name, capacity, equipment) VALUES
 ('room_A', '會議室 A', 4, 'projector,video'),

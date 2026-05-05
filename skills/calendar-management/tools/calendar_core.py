@@ -127,7 +127,7 @@ def find_user_conflicts(
         params.append(exclude_event_id)
     rows = conn.execute(
         f"""
-        SELECT ep.user_id, u.display_name, e.event_id, e.title, e.starts_at, e.ends_at
+        SELECT ep.user_id, u.display_name, u.english_name, e.event_id, e.title, e.starts_at, e.ends_at
         FROM events e
         JOIN event_participants ep ON ep.event_id = e.event_id
         JOIN users u ON u.user_id = ep.user_id
