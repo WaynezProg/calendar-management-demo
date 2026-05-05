@@ -3,6 +3,105 @@
 OpenClaw 行程管理 demo skill。  
 這不是企業正式行事曆系統，而是一個以 SQLite 管理 demo 行程、讓 OpenClaw 可透過 Line 對話展示查詢、建立、修改、取消會議的最小可落地版本。
 
+## OpenClaw Agent Handoff
+
+如果你是 OpenClaw agent，使用這個 repo 時照這段做。
+
+### 1. 安裝到 OpenClaw workspace
+
+```bash
+mkdir -p ~/.openclaw/workspace/skills/calendar-management
+cp -R skills/calendar-management/. ~/.openclaw/workspace/skills/calendar-management/
+```
+
+安裝後驗證：
+
+```bash
+openclaw skills info calendar-management --agent main
+```
+
+預期看到：
+
+```text
+calendar-management ✓ Ready
+Visible to model: yes
+```
+
+如果 skill 剛複製進去但 agent 看不到，重啟 gateway：
+
+```bash
+openclaw config validate
+openclaw gateway restart --force --json
+openclaw health --json
+```
+
+### 2. 使用方式
+
+這個功能不用常駐。OpenClaw gateway 常駐即可；`calendar-management` 是 skill 文件 + Python CLI tools。agent 要查詢或修改行程時，到 skill 目錄執行對應 tool。
+
+```bash
+cd ~/.openclaw/workspace/skills/calendar-management
+```
+
+查詢行程：
+
+```bash
+python tools/query_events.py \
+  --db-path db/calendar.db \
+  --user-id user_001 \
+  --starts-at 2026-05-11T00:00:00+08:00 \
+  --ends-at 2026-05-16T00:00:00+08:00
+```
+
+建立會議：
+
+```bash
+python tools/create_event.py \
+  --db-path db/calendar.db \
+  --creator-user-id user_002 \
+  --participant-user-ids user_003,user_004 \
+  --room-id room_B \
+  --title 使用者需求討論 \
+  --description Demo \
+  --starts-at 2026-05-26T14:00:00+08:00 \
+  --ends-at 2026-05-26T15:00:00+08:00 \
+  --dry-run-line
+```
+
+取消會議：
+
+```bash
+python tools/cancel_event.py \
+  --db-path db/calendar.db \
+  --event-id <event_id> \
+  --actor-user-id user_002 \
+  --dry-run-line
+```
+
+### 3. Line Push 判斷
+
+預設 seed 裡的 `Udemo*` 不是可推送的真實 Line user id。沒有真實 id 或 `LINE_CHANNEL_ACCESS_TOKEN` 時，必須使用 `--dry-run-line`。
+
+要真實推送時，先更新 runtime DB：
+
+```bash
+sqlite3 ~/.openclaw/workspace/skills/calendar-management/db/calendar.db \
+  "UPDATE users SET line_user_id = '<real-line-user-id>' WHERE user_id = 'user_003';"
+```
+
+並確保 agent 執行環境能讀到：
+
+```bash
+export LINE_CHANNEL_ACCESS_TOKEN="<channel-access-token>"
+```
+
+### 4. Agent 回覆規則
+
+- 工具回傳 `ok: true` 才能說建立、修改或取消成功。
+- 工具回傳 `participant_conflict` 或 `room_conflict` 時，要列出衝突事件，不要硬建會議。
+- 找不到 user mapping 時，不要自動建立使用者；回覆 demo registry 沒有該使用者。
+- 沒有真實 Line 設定時，要明講是 dry-run notification。
+
 ## 目標
 
 - 用 SQLite 建立 demo-only calendar backend。
