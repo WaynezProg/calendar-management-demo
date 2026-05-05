@@ -136,6 +136,12 @@ openclaw gateway restart --force --json
 openclaw health --json
 ```
 
+## Runtime Model
+
+`calendar-management` 本身不用常駐。它是一組 OpenClaw skill 文件與 Python CLI tools；agent 需要查詢或修改行程時，才會依照 skill 說明呼叫對應腳本。
+
+需要常駐的是 OpenClaw gateway。只要 gateway 正常、skill 已放在 `~/.openclaw/workspace/skills/calendar-management/`，agent 就可以直接呼叫這個 skill。
+
 ## Line Push
 
 真實 Line push 需要兩件事：
